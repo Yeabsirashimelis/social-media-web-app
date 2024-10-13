@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #080808;
+  color: whitesmoke;
+  height: 100vh;
+  overflow: hidden;
+  font-weight: lighter;
+}
+
+/* scroller stylings */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox */
+* {
+  scrollbar-color: #333 #121212;
+  scrollbar-width: thin;
+}
+
+.loader {
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid #bb86fc;
+  border-radius: 50%;
+  width: 100%; /* Occupies the full width of the parent */
+  height: 100%; /* Occupies the full height of the parent */
+  animation: spin 1s linear infinite;
+  display: flex; /* Use flex to center the inner content */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

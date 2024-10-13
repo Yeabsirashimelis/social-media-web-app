@@ -1,0 +1,18 @@
+// Here’s the step-by-step mechanism for how you can implement this:
+
+// 1. Detecting the Mention
+// When a user submits a post or comment, the system should check the text for mentions using a regular expression to detect the @username pattern.
+
+// 2. Extracting the Mentioned Usernames
+// Once the mention is detected, extract the username(s) from the text and validate them against the database to make sure the mentioned users exist.
+
+// 3. Storing the Mentions in the Database
+// Store the post in the database along with the list of mentions. Each mention should be associated with the correct post and user.
+
+// 4. Trigger a Notification
+// For each valid mention, trigger a notification for the mentioned user by adding a notification entry in the database or sending a real-time notification via WebSockets or Push Notifications.
+
+// const postContent = "This is a post mentioning @alice and @bob";
+// // const mentionRegex = /@(\w+)/g;
+// // const mentions = postContent.match(mentionRegex);
+// // console.log(mentions);  // Output: ['@alice', '@bob']//

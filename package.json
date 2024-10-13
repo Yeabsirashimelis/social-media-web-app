@@ -1,0 +1,37 @@
+{
+  "name": "yabugram",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@tanstack/react-query": "^5.55.4",
+    "cloudinary": "^2.4.0",
+    "critters": "^0.0.24",
+    "framer-motion": "^11.11.8",
+    "mongodb": "^6.8.1",
+    "mongoos": "^0.0.1-security",
+    "mongoose": "^8.6.1",
+    "next": "^14.2.13",
+    "next-auth": "^4.24.7",
+    "photoswipe": "^5.4.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
+    "react-photoswipe-gallery": "^3.0.2",
+    "react-spinners": "^0.14.1"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
