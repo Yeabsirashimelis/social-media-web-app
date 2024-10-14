@@ -11,7 +11,6 @@ function CommunityFollowers({ inviteLink }) {
     queryFn: () => getFollowers(inviteLink),
     queryKey: ["followers", inviteLink],
   });
-
   // State to track followers with their roles
   const [followers, setFollowers] = useState(data || []);
 
@@ -49,6 +48,13 @@ function CommunityFollowers({ inviteLink }) {
     setSelectedFollower(null);
   };
 
+  const onRemoveFollower = (followerId) => {
+    setFollowers((prevFollowers) =>
+      prevFollowers.filter((follower) => follower.userId._id !== followerId)
+    );
+    setSelectedFollower(null);
+  };
+
   if (!followers.length)
     return (
       <p className="mt-4 text-center font-semibold">
@@ -57,7 +63,7 @@ function CommunityFollowers({ inviteLink }) {
     );
 
   return (
-    <div className="mt-4 divide-y divide-y-gray-500">
+    <div className="mt-4">
       {followers.map((followerData, idx) => (
         <div key={idx} className="relative">
           <CommunityFollower
@@ -70,7 +76,8 @@ function CommunityFollowers({ inviteLink }) {
               follower={selectedFollower}
               isAdmin={followerData.isAdmin}
               inviteLink={inviteLink}
-              onPromote={promoteFollower} // Pass the promote function
+              onPromote={promoteFollower}
+              onRemove={onRemoveFollower}
             />
           )}
         </div>

@@ -5,7 +5,10 @@ import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 function CommunityFollower({ follower, isAdmin, onClick }) {
   return (
-    <div className="relative flex items-center py-2 rounded-lg transition-all duration-300 cursor-pointer">
+    <div
+      className="relative bg-[#1a1919]  flex items-center mt-2 p-2 rounded-lg transition-all 
+    duration-300 cursor-pointer"
+    >
       <Image
         src={follower.profilePicture}
         alt={follower.username}

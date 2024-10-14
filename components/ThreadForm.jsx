@@ -83,6 +83,7 @@ function ThreadForm() {
               shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            required
           />
         </div>
 

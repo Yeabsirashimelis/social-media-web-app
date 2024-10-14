@@ -89,26 +89,43 @@ export const POST = async function (request) {
       thread.community = community._id;
     }
 
-    // UPLOAD THE IMAGES TO CLOUDINARY only if medias exist
+    // UPLOAD THE IMAGES OR VIDEOS TO CLOUDINARY only if medias exist
     if (medias.length > 0) {
-      const imageUploadPromises = medias.map(async (media) => {
-        const imageBuffer = await media.arrayBuffer();
-        const imageArray = Array.from(new Uint8Array(imageBuffer));
-        const imageData = Buffer.from(imageArray);
-        const imageBase64 = imageData.toString("base64");
+      const mediaUploadPromises = medias.map(async (media) => {
+        const mediaBuffer = await media.arrayBuffer();
+        const mediaArray = Array.from(new Uint8Array(mediaBuffer));
+        const mediaData = Buffer.from(mediaArray);
+        const mediaBase64 = mediaData.toString("base64");
 
-        // Upload to Cloudinary
-        const result = await cloudinary.uploader.upload(
-          `data:image/png;base64,${imageBase64}`,
-          { folder: "myschool" }
-        );
+        const mediaType = media.type.split("/")[0]; // 'image' or 'video'
+        const mediaFormat = media.type.split("/")[1]; // e.g., 'png', 'mp4'
 
-        return result.secure_url;
+        console.log("mediaType: ", mediaType, "mediaFormat: ", mediaFormat);
+
+        // Determine if it's an image or video, and upload accordingly
+        if (mediaType === "image") {
+          // Upload image to Cloudinary
+          const result = await cloudinary.uploader.upload(
+            `data:image/${mediaFormat};base64,${mediaBase64}`,
+            { folder: "myschool" }
+          );
+          return result.secure_url;
+        } else if (mediaType === "video") {
+          // Upload video to Cloudinary
+          const result = await cloudinary.uploader.upload(
+            `data:video/${mediaFormat};base64,${mediaBase64}`,
+            { folder: "myschool", resource_type: "video" } // resource_type is important for videos
+          );
+          return result.secure_url;
+        }
+
+        // If not image or video, return null (handle unsupported types if necessary)
+        return null;
       });
 
-      // Wait for all the images to upload
-      const uploadedMedias = await Promise.all(imageUploadPromises);
-      thread.medias = uploadedMedias;
+      // Wait for all the media files (images/videos) to upload
+      const uploadedMedias = await Promise.all(mediaUploadPromises);
+      thread.medias = uploadedMedias.filter((url) => url !== null); // Filter out null values
     }
 
     const newThread = new Thread(thread);

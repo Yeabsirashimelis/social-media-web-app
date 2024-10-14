@@ -7,10 +7,9 @@ import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { likeThread } from "@/services/likeApi";
-import { useApp } from "@/appContext";
 import { useRouter } from "next/navigation";
 import AddReply from "./AddReply";
 import { Gallery, Item } from "react-photoswipe-gallery";
@@ -172,36 +171,54 @@ function ThreadCard({ thread }) {
       {thread.medias && (
         <div className="flex  gap-2 px-4" onClick={handleStopNavigation}>
           <Gallery>
-            {thread.medias.map((media, index) => (
-              <div className="relative inset-0 w-1/2" key={index}>
-                <Item
-                  original={media}
-                  thumbnail={media}
-                  width="800"
-                  height="1000"
-                >
-                  {({ ref, open }) => (
-                    <Image
-                      ref={ref}
-                      onClick={open}
+            {thread.medias.map((media, index) => {
+              const isVideo = media.includes("video");
+              return (
+                <div className="relative inset-0 w-1/2" key={index}>
+                  {isVideo ? (
+                    <video
+                      onClick={(e) => {
+                        e.stopPropagation(); //prevent navigation
+                      }}
                       src={media}
-                      alt={name}
-                      width={0}
-                      height={0}
-                      priority={true}
-                      sizes="100vw"
-                      className=" rounded-lg w-full h-full"
+                      muted
+                      controls
+                      autoPlay
+                      loop
+                      className="rounded-lg w-full h-full"
                       style={{ objectFit: "cover" }}
                     />
+                  ) : (
+                    <Item
+                      original={media}
+                      thumbnail={media}
+                      width="800"
+                      height="1000"
+                    >
+                      {({ ref, open }) => (
+                        <Image
+                          ref={ref}
+                          onClick={open}
+                          src={media}
+                          alt={name}
+                          width={0}
+                          height={0}
+                          priority={true}
+                          sizes="100vw"
+                          className="rounded-lg w-full h-full"
+                          style={{ objectFit: "cover" }}
+                        />
+                      )}
+                    </Item>
                   )}
-                </Item>
-                {/* Dark Overlay */}
-                {/* <div
-                  className="absolute inset-0  bg-black opacity-0
-              hover:opacity-20 transition-all duration-200"
-                ></div> */}
-              </div>
-            ))}
+                  {/* Dark Overlay */}
+                  {/* <div
+                    className="absolute inset-0 bg-black opacity-0
+                    hover:opacity-20 transition-all duration-200"
+                  ></div> */}
+                </div>
+              );
+            })}
           </Gallery>
         </div>
       )}

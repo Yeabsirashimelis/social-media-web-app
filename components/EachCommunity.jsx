@@ -73,7 +73,7 @@ function EachCommunity() {
   if (error) return <Error />;
 
   return (
-    <div className="grid py-4 grid-rows-[auto_1fr_auto] h-screen">
+    <div className="grid  grid-rows-[auto_1fr_auto] h-screen">
       {/* Sticky Top - Community Info with Profile */}
       <div className="shadow-lg z-10 py-1 border-b ">
         <div className="flex flex-col  gap-1">
@@ -103,13 +103,20 @@ function EachCommunity() {
           </div>
 
           <div>
-            <p className="font-bold">100 followers</p>
+            <p className="font-extralight text-sm">
+              {data.numberOfFollowers} followers
+            </p>
           </div>
         </div>
       </div>
 
       {/* //commnityInfo */}
-      {communityInfoOpened && <CommunityInfo community={data?.community} />}
+      {communityInfoOpened && (
+        <CommunityInfo
+          community={data?.community}
+          numberOfFollowers={data?.numberOfFollowers}
+        />
+      )}
 
       {/* Main Content */}
       <div className="flex-grow  z-[5] overflow-y-auto">

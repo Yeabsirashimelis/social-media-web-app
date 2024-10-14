@@ -6,7 +6,7 @@ body {
   background-color: #080808;
   color: whitesmoke;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-weight: lighter;
 }
 
@@ -37,18 +37,23 @@ body {
 }
 
 .loader {
-  border: 6px solid rgba(255, 255, 255, 0.2);
-  border-top: 6px solid #bb86fc;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  width: 100%; /* Occupies the full width of the parent */
-  height: 100%; /* Occupies the full height of the parent */
-  animation: spin 1s linear infinite;
-  display: flex; /* Use flex to center the inner content */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  background: conic-gradient(#bb86fc, #6200ea, #bb86fc);
+  animation: rotate 1.5s linear infinite;
+  position: relative;
 }
 
-@keyframes spin {
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background-color: #121212; /* Match the background color */
+  border-radius: 50%;
+}
+
+@keyframes rotate {
   0% {
     transform: rotate(0deg);
   }
