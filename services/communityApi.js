@@ -128,3 +128,27 @@ export async function removeFollower(data) {
     return null;
   }
 }
+
+export async function getMedias(inviteLink) {
+  try {
+    const res = await fetch(`/api/communities/${inviteLink}/medias`);
+    if (!res.ok) throw new Error("can't get medias");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getMusics(inviteLink) {
+  try {
+    const res = await fetch(`/api/communities/${inviteLink}/musics`);
+    if (!res.ok) throw new Error("can't get medias");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

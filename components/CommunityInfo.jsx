@@ -9,12 +9,18 @@ import { useParams } from "next/navigation";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import CommunityOperations from "./CommunityOperations";
 import EditCommunityInfo from "./EditCommunityInfo";
+import MediaInCommunityInfo from "./MediaInCommunityInfo";
+import MusicsInCommunityInfo from "./MusicsInCommunityInfo";
 
 function CommunityInfo({ community, numberOfFollowers }) {
   const [communityOperationsOpened, setCommunityOperationsOpened] =
     useState(false);
   const [editMode, setEditMode] = useState(false); // New state for editing mode
-  const { setCommunityInfoOpened } = useApp();
+  const {
+    setCommunityInfoOpened,
+    communityInfoCurrentTab,
+    setCommunityInfoCurrentTab,
+  } = useApp();
   const { inviteLink } = useParams();
 
   const {
@@ -40,15 +46,14 @@ function CommunityInfo({ community, numberOfFollowers }) {
 
   return (
     <motion.div
-      className="absolute inset-0  flex items-start justify-center bg-black bg-opacity-50 z-[100]"
+      className="absolute inset-0 flex items-start justify-center bg-black bg-opacity-50 z-[100]"
       initial="hidden"
       animate="visible"
       exit="exit"
       variants={modalVariants}
     >
       <motion.div
-        className="relative bg-[#202020] mt-4 h-full max-w-[500px]
-         w-full px-4 py-6 rounded-lg shadow-lg overflow-y-auto"
+        className="relative bg-[#202020] mt-4 h-full max-w-[500px] w-full px-4 py-6 rounded-lg shadow-lg"
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.95 }}
@@ -99,74 +104,115 @@ function CommunityInfo({ community, numberOfFollowers }) {
             onCancel={() => setEditMode(false)} // Close edit mode
           />
         ) : (
-          <div className="flex flex-col items-center mt-8 space-y-4">
-            {/* Community Profile Picture and Info */}
-            <div className="flex items-center gap-4">
-              <Gallery>
-                <Item
-                  original={community?.profilePicture}
-                  thumbnail={community?.profilePicture}
-                  width="800"
-                  height="1000"
-                  className="rounded-full"
-                >
-                  {({ ref, open }) => (
-                    <img
-                      ref={ref}
-                      onClick={open}
-                      src={community?.profilePicture}
-                      alt={community?.communityName}
-                      className="w-16 h-16 rounded-xl shadow-lg object-cover"
-                    />
-                  )}
-                </Item>
-              </Gallery>
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-white">
-                  {community?.communityName}
-                </h2>
-                <p className="text-gray-400">{numberOfFollowers} followers</p>
-                <p className="text-sm text-gray-500 capitalize mt-1">
-                  {community?.communityType} community
-                </p>
+          <>
+            {/* Static Header Section */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex items-center gap-4">
+                <Gallery>
+                  <Item
+                    original={community?.profilePicture}
+                    thumbnail={community?.profilePicture}
+                    width="800"
+                    height="1000"
+                    className="rounded-full"
+                  >
+                    {({ ref, open }) => (
+                      <img
+                        ref={ref}
+                        onClick={open}
+                        src={community?.profilePicture}
+                        alt={community?.communityName}
+                        className="w-16 h-16 rounded-xl shadow-lg object-cover"
+                      />
+                    )}
+                  </Item>
+                </Gallery>
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-white">
+                    {community?.communityName}
+                  </h2>
+                  <p className="text-gray-400">{numberOfFollowers} followers</p>
+                  <p className="text-sm text-gray-500 capitalize mt-1">
+                    {community?.communityType} community
+                  </p>
+                </div>
               </div>
+
+              {community?.description && (
+                <div className="w-full px-4 text-center">
+                  <h3 className="text-lg font-semibold text-white">
+                    Description
+                  </h3>
+                  <p className="text-gray-300 mt-2">{community?.description}</p>
+                </div>
+              )}
             </div>
 
-            {/* Community Description */}
-            {community?.description && (
-              <div className="w-full px-4 text-center">
-                <h3 className="text-lg font-semibold text-white">
-                  Description
-                </h3>
-                <p className="text-gray-300 mt-2">{community?.description}</p>
-              </div>
-            )}
-
-            {/* Invite Link (For Public Communities) */}
-            {community?.inviteLink && (
-              <div className="w-full px-4 py-3 bg-[#252525] rounded-lg flex justify-between items-center hover:bg-[#353535] transition-colors cursor-pointer">
-                <p className="font-semibold text-blue-500">Invite Link:</p>
-                <p className="text-gray-300">{community?.inviteLink}</p>
-              </div>
-            )}
-
+            {/* navs to scrollable fields */}
             <div
-              className={`w-full grid mt-6 text-center ${
+              className={`mt-4 w-full grid text-center ${
                 administer ? "grid-cols-4" : "grid-cols-3"
               }`}
             >
-              {administer && <div className="">Followers</div>}
-              <div className="">Media</div>
-              <div className="">Links</div>
-              <div className="">Voice</div>
+              {administer && (
+                <div
+                  className={`px-2 py-2 ${
+                    communityInfoCurrentTab === "followers"
+                      ? "bg-[#1a1a1a]"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    setCommunityInfoCurrentTab("followers");
+                  }}
+                >
+                  Followers
+                </div>
+              )}
+              <div
+                className={`px-2 py-2 ${
+                  communityInfoCurrentTab === "media" ? "bg-[#1a1a1a]" : ""
+                }`}
+                onClick={() => {
+                  setCommunityInfoCurrentTab("media");
+                }}
+              >
+                Media
+              </div>
+              <div className="px-2 py-2">Links</div>
+              <div
+                className={`px-2 py-2 ${
+                  communityInfoCurrentTab === "musics" ? "bg-[#1a1a1a]" : ""
+                }`}
+                onClick={() => {
+                  setCommunityInfoCurrentTab("musics");
+                }}
+              >
+                Musics
+              </div>
             </div>
 
-            {administer && (
-              <div className="w-full">
-                <CommunityFollowers inviteLink={inviteLink} />
-              </div>
-            )}
-          </div>
+            {/* Scrollable Content Section */}
+            <div className=" overflow-y-auto  h-[50vh] w-full ">
+              {/* Conditional rendering based on the tab */}
+              {administer && communityInfoCurrentTab === "followers" && (
+                <div className="w-full mt-4">
+                  <CommunityFollowers inviteLink={inviteLink} />
+                </div>
+              )}
+
+              {communityInfoCurrentTab === "media" && (
+                <div className="w-full mt-4">
+                  <MediaInCommunityInfo inviteLink={inviteLink} />
+                </div>
+              )}
+
+              {communityInfoCurrentTab === "musics" && (
+                <div className="w-full mt-4">
+                  <MusicsInCommunityInfo inviteLink={inviteLink} />
+                </div>
+              )}
+            </div>
+          </>
         )}
       </motion.div>
     </motion.div>

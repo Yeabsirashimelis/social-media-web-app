@@ -27,6 +27,7 @@ function FollowAndMension({ username, isFollowing: initialIsFolllowing }) {
     onSuccess: () => {
       //i'll do something here
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries(["followersFollowingCount", username]);
     },
 
     onError: (err, variables, context) => {
@@ -37,6 +38,7 @@ function FollowAndMension({ username, isFollowing: initialIsFolllowing }) {
     onSettled: () => {
       // Refetch the profile data to ensure it's up to date
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries(["followersFollowingCount", username]);
     },
   });
 
@@ -61,6 +63,7 @@ function FollowAndMension({ username, isFollowing: initialIsFolllowing }) {
     onSuccess: () => {
       //i'll do something here
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries(["followersFollowingCount", username]);
     },
 
     onError: (err, variables, context) => {
@@ -71,6 +74,7 @@ function FollowAndMension({ username, isFollowing: initialIsFolllowing }) {
     onSettled: () => {
       // Refetch the profile data to ensure it's up to date
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries(["followersFollowingCount", username]);
     },
   });
 

@@ -1,0 +1,29 @@
+.rhap_container {
+  background-color: #333; /* Dark background */
+  color: white; /* General text color */
+}
+
+.rhap_button-clear {
+  color: white; /* Button color */
+}
+
+.rhap_progress-indicator {
+  background-color: gray; /* Progress indicator color */
+}
+
+.rhap_current-time,
+.rhap_total-time {
+  color: white; /* Ensures the time display is visible */
+}
+
+.rhap_progress-filled {
+  background-color: gray; /* Customize progress bar fill color */
+}
+
+.rhap_volume-bar {
+  background-color: #555; /* Customize volume bar background */
+}
+
+.rhap_volume-indicator {
+  background-color: white; /* Customize volume indicator color */
+}

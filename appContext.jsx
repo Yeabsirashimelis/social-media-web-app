@@ -7,6 +7,10 @@ function AppProvider({ children }) {
   const [communityFormOpened, setCommunityFormOpened] = useState(false);
   const [contentOfCommunity, setContentOfCommunity] = useState("");
   const [communityInfoOpened, setCommunityInfoOpened] = useState(false);
+  const [communityInfoCurrentTab, setCommunityInfoCurrentTab] =
+    useState("followers");
+
+  console.log(communityInfoCurrentTab);
 
   function openCommunityForm() {
     setCommunityFormOpened(true);
@@ -26,6 +30,8 @@ function AppProvider({ children }) {
         setContentOfCommunity,
         communityInfoOpened,
         setCommunityInfoOpened,
+        communityInfoCurrentTab,
+        setCommunityInfoCurrentTab,
       }}
     >
       {children}

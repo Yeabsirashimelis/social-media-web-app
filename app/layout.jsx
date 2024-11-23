@@ -8,8 +8,6 @@ import ModalProfileComplete from "@/components/ModalProfileComplete";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import { AppProvider } from "@/appContext";
 
-export const metadata = {};
-
 function Layout({ children }) {
   return (
     <ReactQueryProvider>

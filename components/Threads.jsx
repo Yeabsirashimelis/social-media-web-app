@@ -1,11 +1,7 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { getThreads } from "@/services/threadApi";
 import Spinner from "./Spinner";
 import ThreadCard from "./ThreadCard";
-import Header from "@/customcomponents/Header";
-import { useState } from "react";
 
 function Threads() {
   const {

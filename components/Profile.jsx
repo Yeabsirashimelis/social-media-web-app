@@ -15,6 +15,7 @@ import ContentInProfile from "./ContentInProfile";
 import { useRouter } from "next/navigation";
 import RepliesInProfile from "./RepliesInProfile";
 import FollowAndMension from "./FollowAndMension";
+import ProfileFollowsCount from "./ProfileFollowsCount";
 
 function Profile() {
   const { username } = useParams();
@@ -29,8 +30,6 @@ function Profile() {
     queryKey: ["profile", username],
     queryFn: () => getProfile(username),
   });
-
-  console.log(data);
 
   if (isLoading) return <Spinner loading={isLoading} />;
   return (
@@ -91,6 +90,10 @@ function Profile() {
               </div>
             )}
           </div>
+        </div>
+
+        <div>
+          <ProfileFollowsCount username={username} />
         </div>
 
         {isMe ? (

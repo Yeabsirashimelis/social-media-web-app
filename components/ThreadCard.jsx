@@ -13,7 +13,9 @@ import { likeThread } from "@/services/likeApi";
 import { useRouter } from "next/navigation";
 import AddReply from "./AddReply";
 import { Gallery, Item } from "react-photoswipe-gallery";
-import Link from "next/link";
+import ReactAudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
+import "../assets/styles/audioplayer.css";
 
 function ThreadCard({ thread }) {
   const {
@@ -173,6 +175,7 @@ function ThreadCard({ thread }) {
           <Gallery>
             {thread.medias.map((media, index) => {
               const isVideo = media.includes("video");
+              const isAudio = media.includes("raw");
               return (
                 <div className="relative inset-0 w-1/2" key={index}>
                   {isVideo ? (
@@ -188,6 +191,22 @@ function ThreadCard({ thread }) {
                       className="rounded-lg w-full h-full"
                       style={{ objectFit: "cover" }}
                     />
+                  ) : isAudio ? (
+                    <ReactAudioPlayer
+                      onClick={(e) => e.stopPropagation()}
+                      src={media}
+                      muted
+                      controls
+                      autoPlay
+                      loop
+                      className="w-full rounded-lg"
+                      style={{
+                        backgroundColor: "rgb(68, 65, 65)",
+                        color: "white",
+                      }}
+                    >
+                      Your browser does not support the audio element.
+                    </ReactAudioPlayer>
                   ) : (
                     <Item
                       original={media}

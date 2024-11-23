@@ -1,11 +1,13 @@
 import Profile from "@/components/Profile";
+import RepliesInProfile from "@/components/RepliesInProfile";
 
-function repliesInProfilePage() {
+function ProfileRepliesPage() {
   return (
-    <div>
+    <>
       <Profile />
-    </div>
+      <RepliesInProfile />
+    </>
   );
 }
 
-export default repliesInProfilePage;
+export default ProfileRepliesPage;

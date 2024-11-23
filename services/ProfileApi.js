@@ -42,3 +42,16 @@ export async function getYourReplies(username) {
     console.log(error);
   }
 }
+
+export async function getFollowersFollowingCount(username) {
+  try {
+    const res = await fetch(
+      `/api/profile/${username}/followers-following-count`
+    );
+    if (!res.ok) throw new Error("can't get num of followers");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
